@@ -20,6 +20,29 @@ function ProfileSidebar(propriedade) {
   )
 }
 
+function ProfileRelationsBox(props) {
+  return (
+    <ProfileRelationsBoxWrapper>
+          <h2 className="smalltitle"> 
+            {props.title} ({props.items.length})
+          </h2>
+
+          {/* <ul>
+            {props.items.map((itemAtual) => {
+              return (
+                <li key={itemAtual}>
+                  <a href={`https://github.com/${itemAtual}.png`}>
+                    <img src={itemAtual.image} />
+                    <span>{itemAtual.title}</span>
+                  </a>
+                </li>
+              )
+            })}
+          </ul> */}
+      </ProfileRelationsBoxWrapper>
+  )
+}
+
 
 export default function Home() {
   const [comunidades, setComunidades] = React.useState([{
@@ -32,6 +55,18 @@ export default function Home() {
   const usuarioAleatorio = 'victorbohrer';
 
   const pessoasFavoritas = ['marcobrunodev', 'danielhe4rt', 'peas', 'juunegreiros', 'juunegreiros', 'juunegreiros']
+
+  const [seguidores, setSeguidores] = React.useState([]);
+
+  React.useEffect(function (){
+    fetch('https://api.github.com/users/victorbohrer/followers')
+    .then(function (repostaDoServidor) {
+      return repostaDoServidor.json()
+    })
+    .then(function (repostaConvertida) {
+      setSeguidores(repostaConvertida)
+    })
+  }, [])
   
   return (
   <>
@@ -60,9 +95,7 @@ export default function Home() {
             const dadosDoForm = new FormData(e.target);
 
             console.log('Campo: ', dadosDoForm.get('title'));
-            console.log('Campo: ', dadosDoForm.get('image'));
-
-            // comunidades.push('Tibianos');
+            console.log('Campo: ', dadosDoForm.get('image'));        
 
             const comunidade = {
               id: new Date().toISOString(),
@@ -92,12 +125,12 @@ export default function Home() {
               Criar comunidade
             </button>
           </form> 
-
-
         </Box>
       </div>
 
       <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}> 
+      <ProfileRelationsBox title="Seguidores" items={seguidores} />    
+
       <ProfileRelationsBoxWrapper>
           <h2 className="smalltitle"> 
             comunidades ({comunidades.length})

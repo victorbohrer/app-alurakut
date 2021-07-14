@@ -22,6 +22,7 @@ const Box = styled.div`
     margin-bottom: 20px;
   }
   .subTitle {
+    padding-left: 16px;
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 20px;

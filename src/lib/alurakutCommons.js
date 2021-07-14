@@ -96,6 +96,7 @@ AlurakutMenu.Wrapper = styled.header`
   }
 
   .container {
+    width: 100%;
     background-color: #308BC5;
     padding: 7px 16px;
     max-width: 1110px;
